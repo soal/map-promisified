@@ -1,0 +1,20 @@
+{
+  "name": "map-promisified",
+  "version": "0.1.0",
+  "author": {
+    "name": "soal",
+    "email": "sorrrow.about.alice@gmail.com",
+    "url": "https://github.com/soal"
+  },
+  "description": "Wrapper for Mapbox Gl JS library that gives nice Promise-based API to asynchronous map functions",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soal/vue-mapbox.git"
+  },
+  "private": false,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
