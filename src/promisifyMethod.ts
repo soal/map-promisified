@@ -28,10 +28,12 @@ function promisifyMethod(map: Map, methodName: string): (...args: any) => Promis
   const argsCount = method.length
 
   return async (...args) => {
+    const handlers = []
     const eventData = { eventId: generateEventId(methodName) }
-    const funcs = methods[methodName].events.map((event) => {
+    const funcs = methods[methodName].events.map((event, index) => {
       return new Promise((resolve, reject) => {
-        map.on(event, catchEventFabric(map, event, eventData.eventId, resolve))
+        handlers[index] = { event, func: catchEventFabric(map, event, eventData.eventId, resolve) }
+        map.on(event, handlers[index])
       })
     })
 
@@ -43,7 +45,15 @@ function promisifyMethod(map: Map, methodName: string): (...args: any) => Promis
         argsArray.push(args[i] || null)
       }
     }
-    method.apply(map, argsArray)
+
+    try {
+      method.apply(map, argsArray)
+    } catch (err) {
+      handlers.forEach(({ event, func }) => {
+        map.off(event, func)
+      })
+      throw err
+    }
 
     return Promise.all(funcs).then(() => {
       return methods[methodName].getter(map)
