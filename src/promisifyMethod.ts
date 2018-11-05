@@ -27,7 +27,7 @@ function promisifyMethod(map: Map, methodName: string): (any) => Promise<object>
   const method = map[methodName]
   const argsCount = method.length
 
-  return (...args) => {
+  return async (...args) => {
     const eventData = { eventId: generateEventId(methodName) }
     const funcs = methods[methodName].events.map((event) => {
       return new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ function promisifyMethod(map: Map, methodName: string): (any) => Promise<object>
     }
     method.apply(map, argsArray)
 
-    return Promise.all(funcs).then(res => {
+    return Promise.all(funcs).then(() => {
       return methods[methodName].getter(map)
     })
   }

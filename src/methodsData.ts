@@ -5,7 +5,7 @@ export default {
   panBy: { events: [], getter: (map: Map): object => ({}) }, // (offset, options, eventData)
   panTo: { events: [], getter: (map: Map): object => ({}) }, // (lnglat, options, eventData)
   setZoom: { events: [], getter: (map: Map): object => ({}) }, // (zoom, eventData)
-  zoomTo: { events: [], getter: (map: Map): object => ({}) }, // (zoom, options, eventData)
+  zoomTo: { events: ['zoomend'], getter: (map: Map): object => ({ zoom: map.getZoom() }) },
   zoomIn: { events: ['zoomend'], getter: (map: Map): object => ({ zoom: map.getZoom() }) },
   zoomOut: { events: ['zoomend'], getter: (map: Map): object => ({ zoom: map.getZoom() }) },
   setBearing: { events: [], getter: (map: Map): object => ({}) }, // (bearing, eventData)
