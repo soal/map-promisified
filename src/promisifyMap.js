@@ -2,9 +2,9 @@ import promisifyMethod from './promisifyMethod'
 import methodsData from './methodsData'
 
 export default function (map) {
-  const methodsNames = Object.keys(methodsData)
+  const toPromisify = Object.keys(methodsData)
   Object.keys(map).forEach(key => {
-    if (methodsNames.includes(key)) {
+    if (toPromisify.includes(key)) {
       map[key] = promisifyMethod(map, key)
     }
   })
