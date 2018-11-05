@@ -3,7 +3,7 @@ import { Map, MapboxEvent } from 'mapbox-gl'
 
 type Event = { eventId: string } & MapboxEvent
 
-function generateEventId (methodName: string): string {
+function generateEventId(methodName: string): string {
   return `${methodName}-${('' + Math.random()).split('.')[1]}`
 }
 
@@ -23,7 +23,7 @@ function catchEventFabric(
   return catchEvent
 }
 
-function promisifyMethod(map: Map, methodName: string): (any) => Promise<object> {
+function promisifyMethod(map: Map, methodName: string): (...args: any) => Promise<object> {
   const method = map[methodName]
   const argsCount = method.length
 
