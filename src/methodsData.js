@@ -1,21 +1,21 @@
-export default {
-  setCenter: { events: ['moveend'], getter: map => ({ center: map.getCenter() })},
-  panBy: { events: [], getter: map => ({}) }, // (offset, options, eventData)
-  panTo: { events: [], getter: map => ({}) }, // (lnglat, options, eventData)
-  setZoom: { events: [], getter: map => ({}) }, // (zoom, eventData)
-  zoomTo: { events: [], getter: map => ({}) }, // (zoom, options, eventData)
-  zoomIn: { events: ['zoomend'], getter: map => ({ zoom: map.getZoom() }) },
-  zoomOut: { events: ['zoomend'], getter: map => ({ zoom: map.getZoom() }) },
-  setBearing: { events: [], getter: map => ({}) }, // (bearing, eventData)
-  rotateTo: { events: [], getter: map => ({}) }, // (bearing, options, eventData)
-  resetNorth: { events: [], getter: map => ({}) }, // (options, eventData)
-  snapToNorth: { events: [], getter: map => ({}) }, // (options, eventData)
-  setPitch: { events: [], getter: map => ({}) }, // (pitch, eventData)
-  fitBounds: { events: [], getter: map => ({}) }, // (bounds, options?, eventData?)
-  fitScreenCoordinates: { events: [], getter: map => ({}) }, // (p0, p1, bearing, options, eventData)
-  jumpTo: { events: [], getter: map => ({}) }, // (options, eventData)
-  easeTo: { events: [], getter: map => ({}) }, // (options, eventData)
-  flyTo: { events: [], getter: map => ({}) } // (options, eventData)
-}
-
-
+"use strict";
+exports.__esModule = true;
+exports["default"] = {
+    setCenter: { events: ['moveend'], getter: function (map) { return ({ center: map.getCenter() }); } },
+    panBy: { events: [], getter: function (map) { return ({}); } },
+    panTo: { events: [], getter: function (map) { return ({}); } },
+    setZoom: { events: [], getter: function (map) { return ({}); } },
+    zoomTo: { events: [], getter: function (map) { return ({}); } },
+    zoomIn: { events: ['zoomend'], getter: function (map) { return ({ zoom: map.getZoom() }); } },
+    zoomOut: { events: ['zoomend'], getter: function (map) { return ({ zoom: map.getZoom() }); } },
+    setBearing: { events: [], getter: function (map) { return ({}); } },
+    rotateTo: { events: [], getter: function (map) { return ({}); } },
+    resetNorth: { events: [], getter: function (map) { return ({}); } },
+    snapToNorth: { events: [], getter: function (map) { return ({}); } },
+    setPitch: { events: [], getter: function (map) { return ({}); } },
+    fitBounds: { events: [], getter: function (map) { return ({}); } },
+    fitScreenCoordinates: { events: [], getter: function (map) { return ({}); } },
+    jumpTo: { events: [], getter: function (map) { return ({}); } },
+    easeTo: { events: [], getter: function (map) { return ({}); } },
+    flyTo: { events: [], getter: function (map) { return ({}); } } // (options, eventData)
+};

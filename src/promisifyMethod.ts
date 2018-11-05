@@ -1,10 +1,16 @@
 import methods from './methodsData'
+import { Map } from 'mapbox-gl'
 
-function generateEventId (methodName) {
+function generateEventId (methodName: string): string {
   return `${methodName}-${('' + Math.random()).split('.')[1]}`
 }
 
-function catchEventFabric (map, eventName, eventId, resolve) {
+function catchEventFabric(
+  map: Map,
+  eventName: string,
+  eventId: string,
+  resolve: Function
+): (event: any) => void {
   const catchEvent = event => {
     if (event.type !== eventName || event.eventId !== eventId) return
     map.off(eventName, catchEvent)
@@ -13,7 +19,7 @@ function catchEventFabric (map, eventName, eventId, resolve) {
   return catchEvent
 }
 
-export function promisifyMethod (map, methodName) {
+function promisifyMethod (map: Map, methodName: string): (any) => Promise<object> {
   const method = map[methodName]
   const argsCount = method.length
 
@@ -40,3 +46,5 @@ export function promisifyMethod (map, methodName) {
     })
   }
 }
+
+export default promisifyMethod
