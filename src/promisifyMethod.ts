@@ -1,25 +1,35 @@
 import methods from './methodsData'
+import { Map, MapboxEvent } from 'mapbox-gl'
 
-function generateEventId (methodName) {
+type Event = { eventId: string } & MapboxEvent
+
+function generateEventId (methodName: string): string {
   return `${methodName}-${('' + Math.random()).split('.')[1]}`
 }
 
-function catchEventFabric (map, eventName, eventId, resolve) {
-  const catchEvent = event => {
-    if (event.type !== eventName || event.eventId !== eventId) return
+function catchEventFabric(
+  map: Map,
+  eventName: string,
+  eventId: string,
+  resolve: (event) => void
+): (event: any) => void {
+  const catchEvent = (event: Event) => {
+    if (event.type !== eventName || event.eventId !== eventId) {
+      return
+    }
     map.off(eventName, catchEvent)
     return resolve(event)
   }
   return catchEvent
 }
 
-export function promisifyMethod (map, methodName) {
+function promisifyMethod(map: Map, methodName: string): (any) => Promise<object> {
   const method = map[methodName]
   const argsCount = method.length
 
-  return (...args) => {
+  return async (...args) => {
     const eventData = { eventId: generateEventId(methodName) }
-    const funcs = methods[methodName].events.map(event => {
+    const funcs = methods[methodName].events.map((event) => {
       return new Promise((resolve, reject) => {
         map.on(event, catchEventFabric(map, event, eventData.eventId, resolve))
       })
@@ -35,8 +45,10 @@ export function promisifyMethod (map, methodName) {
     }
     method.apply(map, argsArray)
 
-    return Promise.all(funcs).then(res => {
+    return Promise.all(funcs).then(() => {
       return methods[methodName].getter(map)
     })
   }
 }
+
+export default promisifyMethod
