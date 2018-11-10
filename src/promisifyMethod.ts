@@ -27,13 +27,13 @@ function promisifyMethod(map: Map, methodName: string): (...args: any) => Promis
   const method = map[methodName]
   const argsCount = method.length
 
-  return async (...args) => {
+  return (...args) => {
     const handlers = []
     const eventData = { eventId: generateEventId(methodName) }
     const funcs = methods[methodName].events.map((event, index) => {
       return new Promise((resolve, reject) => {
         handlers[index] = { event, func: catchEventFabric(map, event, eventData.eventId, resolve) }
-        map.on(event, handlers[index])
+        map.on(event, handlers[index].func)
       })
     })
 

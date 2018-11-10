@@ -1,16 +1,18 @@
 import promisifyMethod from './promisifyMethod'
 import methodsData from './methodsData'
 import { Map } from 'mapbox-gl'
+import IMapActions from './mapActions'
 
-type PromisifiedMap = {
-} & Map
-
-export default function(map: Map): PromisifiedMap {
+export default function(map: Map): IMapActions {
   const toPromisify = Object.keys(methodsData)
-  Object.keys(map).forEach((key: string) => {
+
+  const actions: IMapActions = {} as any
+
+  toPromisify.forEach((key: string) => {
     if (toPromisify.indexOf(key) !== -1) {
-      map[key] = promisifyMethod(map, key)
+      actions[key] = promisifyMethod(map, key)
     }
   })
-  return map
+
+  return actions
 }
