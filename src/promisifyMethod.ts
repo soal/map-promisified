@@ -18,7 +18,7 @@ function catchEventFabric(
       return
     }
     map.off(eventName, catchEvent)
-    return resolve(event)
+    resolve(event)
   }
   return catchEvent
 }
@@ -55,13 +55,14 @@ function promisifyMethod(map: Map, methodName: string): (...args: any) => Promis
     }
 
     let funcs = []
+    const options = args[0] || {}
     try {
       method.apply(map, argsArray)
       // Filter catchers.
       // If map state is not changes (e.g. zoomTo(1) don't produce any events if map already on zoom 1),
       // just return resolved promise
       funcs = catchers.map(({ event, func }) => {
-        if (event.check(map)) {
+        if (event.check(map, options)) {
           return func
         } else {
           map.off(event.name, func)
