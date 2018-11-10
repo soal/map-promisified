@@ -52,9 +52,9 @@ export default {
     })
   },
   setPitch: {
-    events: [{ name: '', check: (map: Map): boolean => true }],
+    events: [{ name: 'pitchend', check: (map: Map): boolean => true }],
     getter: (map: Map): object => ({
-
+      pitch: map.getPitch()
     })
   }, // (pitch, eventData)
   fitBounds: {
@@ -70,20 +70,45 @@ export default {
     })
   }, // (p0, p1, bearing, options, eventData)
   jumpTo: {
-    events: [{ name: '', check: (map: Map): boolean => true }],
+    events: [
+      { name: 'moveend', check: (map: Map): boolean => map.isMoving() },
+      { name: 'zoomend', check: (map: Map): boolean => map.isZooming() },
+      { name: 'rotateend', check: (map: Map): boolean => map.isRotating() },
+      { name: 'pitchend', check: (map: Map): boolean => map.isMoving() }
+    ],
     getter: (map: Map): object => ({
-
+      center: map.getCenter(),
+      zoom: map.getZoom(),
+      bearing: map.getBearing(),
+      pitch: map.getPitch()
     })
-   }, // (options, eventData)
+  },
   easeTo: {
-    events: [{ name: '', check: (map: Map): boolean => true }],
+    events: [
+      { name: 'moveend', check: (map: Map): boolean => map.isMoving() },
+      { name: 'zoomend', check: (map: Map): boolean => map.isZooming() },
+      { name: 'rotateend', check: (map: Map): boolean => map.isRotating() },
+      { name: 'pitchend', check: (map: Map): boolean => map.isMoving() }
+    ],
     getter: (map: Map): object => ({
-
+      center: map.getCenter(),
+      zoom: map.getZoom(),
+      bearing: map.getBearing(),
+      pitch: map.getPitch()
     })
-  }, // (options, eventData)
+  },
   flyTo: {
-    events: [{ name: '', check: (map: Map): boolean => true }],
+    events: [
+      { name: 'moveend', check: (map: Map): boolean => map.isMoving() },
+      { name: 'zoomend', check: (map: Map): boolean => map.isZooming() },
+      { name: 'rotateend', check: (map: Map): boolean => map.isRotating() },
+      { name: 'pitchend', check: (map: Map): boolean => map.isMoving() }
+    ],
     getter: (map: Map): object => ({
-
+      center: map.getCenter(),
+      zoom: map.getZoom(),
+      bearing: map.getBearing(),
+      pitch: map.getPitch()
     })
+  }
 }
