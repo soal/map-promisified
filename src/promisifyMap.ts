@@ -1,5 +1,5 @@
 import promisifyMethod from './promisifyMethod'
-import methodsData from './methodsData'
+import methodsData from './methodsConfig'
 import { Map } from 'mapbox-gl'
 import IMapActions from './mapActions'
 
