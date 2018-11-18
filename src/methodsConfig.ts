@@ -62,9 +62,14 @@ export default {
     })
   },
   fitBounds: {
-    events: [{ name: '', check: (map: Map): boolean => true }],
+    events: [
+      { name: 'zoomend', check: (map: Map, options: FitBoundsOptions): boolean => map.isZooming() },
+      { name: 'rotateend', check: (map: Map, options: FitBoundsOptions): boolean => map.isRotating() }
+    ],
     getter: (map: Map): object => ({
-
+      zoom: map.getZoom(),
+      bearing: map.getBearing(),
+      pitch: map.getPitch()
     })
   },
   fitScreenCoordinates: {
