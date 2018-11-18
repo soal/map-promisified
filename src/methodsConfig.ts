@@ -77,6 +77,7 @@ export default {
   fitScreenCoordinates: {
     events: [
       { name: 'zoomend', check: (map: Map, options): boolean => map.isZooming() },
+      { name: 'moveend', check: (map: Map, options): boolean => map.isMoving() },
       { name: 'rotateend', check: (map: Map, options): boolean => options.bearing && map.isRotating() }
     ],
     getter: (map: Map): object => ({
