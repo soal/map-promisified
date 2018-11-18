@@ -63,19 +63,27 @@ export default {
   },
   fitBounds: {
     events: [
-      { name: 'zoomend', check: (map: Map, options: FitBoundsOptions): boolean => map.isZooming() },
-      { name: 'rotateend', check: (map: Map, options: FitBoundsOptions): boolean => map.isRotating() }
+      { name: 'zoomend', check: (map: Map): boolean => map.isZooming() },
+      { name: 'moveend', check: (map: Map): boolean => map.isMoving() },
+      { name: 'rotateend', check: (map: Map): boolean => map.isRotating() }
     ],
     getter: (map: Map): object => ({
       zoom: map.getZoom(),
       bearing: map.getBearing(),
-      pitch: map.getPitch()
+      pitch: map.getPitch(),
+      center: map.getCenter()
     })
   },
   fitScreenCoordinates: {
-    events: [{ name: '', check: (map: Map): boolean => true }],
+    events: [
+      { name: 'zoomend', check: (map: Map, options): boolean => map.isZooming() },
+      { name: 'rotateend', check: (map: Map, options): boolean => options.bearing && map.isRotating() }
+    ],
     getter: (map: Map): object => ({
-
+      zoom: map.getZoom(),
+      center: map.getCenter(),
+      bearing: map.getBearing(),
+      pitch: map.getPitch()
     })
   },
   jumpTo: composedMethodConfig,

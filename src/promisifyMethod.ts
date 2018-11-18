@@ -1,5 +1,5 @@
 import methods from './methodsConfig'
-import { Map, MapboxEvent } from 'mapbox-gl'
+import { Map, MapboxEvent, PointLike } from 'mapbox-gl'
 
 type Event = { eventId: string } & MapboxEvent
 
@@ -55,12 +55,33 @@ function promisifyMethod(map: Map, methodName: string): (...args: any) => Promis
     }
 
     let funcs = []
-    const options = args[0] || {}
+    let options = args[0] || {}
     try {
       method.apply(map, argsArray)
       // Filter catchers.
       // If map state is not changes (e.g. zoomTo(1) don't produce any events if map already on zoom 1),
       // just return resolved promise
+
+      // .fitBounds() and .fitScreenCoordinates() needs special processing due to different number of arguments
+      if (methodName === 'fitBounds') {
+        // args[0] is bounding box, options is args[1], but we don't need them to calculate events to listen
+        options = {}
+      }
+
+      if (methodName === 'fitScreenCoordinates') {
+        options = { bearing: null }
+        options.bearing = null
+        if (typeof args[2] === 'number') {
+          options.bearing = args[2]
+        }
+        if (args[3] && typeof args[3] === 'object') {
+          options = {
+            ...options,
+            ...args[3]
+          }
+        }
+      }
+
       funcs = catchers.map(({ event, func }) => {
         if (event.check(map, options)) {
           return func
