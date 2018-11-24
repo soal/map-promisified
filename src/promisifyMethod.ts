@@ -1,5 +1,5 @@
 import methods from './methodsConfig'
-import { Map, MapboxEvent, PointLike } from 'mapbox-gl'
+import { Map, MapboxEvent } from 'mapbox-gl'
 
 type Event = { eventId: string } & MapboxEvent
 
@@ -75,7 +75,7 @@ function promisifyMethod(map: Map, methodName: string): (...args: any) => Promis
         if (typeof args[2] === 'number') {
           options.bearing = args[2]
         }
-        // pass bearing with merged with other options
+        // pass bearing merged with other options
         if (args[3] && typeof args[3] === 'object') {
           options = {
             ...options,
