@@ -10,7 +10,7 @@ module.exports = {
   context: path.resolve(__dirname),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: 'mapPromisify.js',
     library: 'mapPromisify',
     libraryTarget: 'umd',
     libraryExport: 'default'

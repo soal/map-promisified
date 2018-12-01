@@ -13,6 +13,5 @@ export default function(map: Map): IMapActions {
       actions[key] = promisifyMethod(map, key)
     }
   })
-
   return actions
 }

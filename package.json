@@ -13,7 +13,7 @@
     "url": "https://github.com/soal/map-promisified.git"
   },
   "private": false,
-  "main": "dist/index.js",
+  "main": "dist/mapPromisify.js",
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
