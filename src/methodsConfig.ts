@@ -43,7 +43,10 @@ const rotateMethodConfig = {
 }
 
 export default {
-  setCenter: moveMethodConfig,
+  setCenter: {
+    events: [{ name: 'idle', check: (map: Map): boolean => map.isMoving() }],
+    getter: (map: Map): object => ({ center: map.getCenter() })
+  },
   panBy: moveMethodConfig,
   panTo: moveMethodConfig,
   setZoom: zoomMethodConfig,
