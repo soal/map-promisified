@@ -1,1 +1,193 @@
-(function(e,n){"object"===typeof exports&&"object"===typeof module?module.exports=n():"function"===typeof define&&define.amd?define([],n):"object"===typeof exports?exports["mapPromisify"]=n():e["mapPromisify"]=n()})(window,function(){return function(e){var n={};function t(o){if(n[o])return n[o].exports;var r=n[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,t),r.l=!0,r.exports}return t.m=e,t.c=n,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:o})},t.r=function(e){"undefined"!==typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"===typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(t.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var r in e)t.d(o,r,function(n){return e[n]}.bind(null,r));return o},t.n=function(e){var n=e&&e.__esModule?function(){return e["default"]}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},t.p="",t(t.s=0)}([function(e,n,t){e.exports=t(1)},function(e,n,t){"use strict";t.r(n);var o=[{name:"moveend",check:function(e,n){return n.center&&e.isMoving()}},{name:"zoomend",check:function(e,n){return void 0!==n.zoom&&null!==n.zoom&&e.isZooming()}},{name:"rotateend",check:function(e,n){return void 0!==n.bearing&&null!==n.bearing&&e.isRotating()}},{name:"pitchend",check:function(e,n){return void 0!==n.pitch&&null!==n.bearing&&e.isMoving()}}],r=function(e){return{center:e.getCenter(),zoom:e.getZoom(),bearing:e.getBearing(),pitch:e.getPitch()}},i={events:o,getter:r},u={events:[{name:"moveend",check:function(e){return e.isMoving()}}],getter:function(e){return{center:e.getCenter()}}},c={events:[{name:"zoomend",check:function(e){return e.isZooming()}}],getter:function(e){return{zoom:e.getZoom()}}},f={events:[{name:"rotateend",check:function(e){return e.isRotating()}}],getter:function(e){return{bearing:e.getBearing()}}},a={setCenter:u,panBy:u,panTo:u,setZoom:c,zoomTo:c,zoomIn:c,zoomOut:c,setBearing:f,rotateTo:f,resetNorth:f,snapToNorth:f,setPitch:{events:[{name:"pitchend",check:function(e){return!0}}],getter:function(e){return{pitch:e.getPitch()}}},fitBounds:{events:[{name:"zoomend",check:function(e){return e.isZooming()}},{name:"moveend",check:function(e){return e.isMoving()}},{name:"rotateend",check:function(e){return e.isRotating()}}],getter:function(e){return{zoom:e.getZoom(),bearing:e.getBearing(),pitch:e.getPitch(),center:e.getCenter()}}},fitScreenCoordinates:{events:[{name:"zoomend",check:function(e,n){return e.isZooming()}},{name:"moveend",check:function(e,n){return e.isMoving()}},{name:"rotateend",check:function(e,n){return n.bearing&&e.isRotating()}}],getter:function(e){return{zoom:e.getZoom(),center:e.getCenter(),bearing:e.getBearing(),pitch:e.getPitch()}}},jumpTo:i,easeTo:i,flyTo:i};function l(e){return l="function"===typeof Symbol&&"symbol"===typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"===typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},l(e)}function m(e){for(var n=1;n<arguments.length;n++){var t=null!=arguments[n]?arguments[n]:{},o=Object.keys(t);"function"===typeof Object.getOwnPropertySymbols&&(o=o.concat(Object.getOwnPropertySymbols(t).filter(function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable}))),o.forEach(function(n){g(e,n,t[n])})}return e}function g(e,n,t){return n in e?Object.defineProperty(e,n,{value:t,enumerable:!0,configurable:!0,writable:!0}):e[n]=t,e}function s(e){return"".concat(e,"-").concat((""+Math.random()).split(".")[1])}function d(e,n,t,o){var r=function r(i){i.type===n&&i.eventId===t&&(e.off(n,r),o(i))};return r}function p(e,n){var t=e[n],o=t.length;return function(){for(var r=[],i={eventId:s(n)},u=a[n].events.map(function(n,t){return{event:n,func:new Promise(function(o,u){r[t]={event:n,func:d(e,n.name,i.eventId,o)},e.on(n.name,r[t].func)})}}),c=[],f=0;f<o;f++)f===o-1?c.push(m({},i,(f<0||arguments.length<=f?void 0:arguments[f])||{})):c.push((f<0||arguments.length<=f?void 0:arguments[f])||null);var g=[],p=(arguments.length<=0?void 0:arguments[0])||{};try{t.apply(e,c),"fitBounds"===n&&(p={}),"fitScreenCoordinates"===n&&(p={bearing:null},p.bearing=null,"number"===typeof(arguments.length<=2?void 0:arguments[2])&&(p.bearing=arguments.length<=2?void 0:arguments[2]),(arguments.length<=3?void 0:arguments[3])&&"object"===l(arguments.length<=3?void 0:arguments[3])&&(p=m({},p,arguments.length<=3?void 0:arguments[3]))),g=u.map(function(n){var t=n.event,o=n.func;return t.check(e,p)?o:(e.off(t.name,o),Promise.resolve())})}catch(v){throw r.forEach(function(n){var t=n.event,o=n.func;e.off(t.name,o)}),v}return Promise.all(g).then(function(){return a[n].getter(e)})}}var v=p,h=function(e){var n=Object.keys(a),t={};return n.forEach(function(o){-1!==n.indexOf(o)&&(t[o]=v(e,o))}),t};function b(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null;return n?v(e,n):h(e)}t.d(n,"default",function(){return b})}])["default"]});
+const composedMethodEvents = [
+    { name: 'moveend', check: (map, options) => options.center && map.isMoving()
+    },
+    { name: 'zoomend', check: (map, options) => options.zoom !== undefined && options.zoom !== null && map.isZooming()
+    },
+    { name: 'rotateend', check: (map, options) => options.bearing !== undefined && options.bearing !== null && map.isRotating()
+    },
+    { name: 'pitchend', check: (map, options) => options.pitch !== undefined && options.bearing !== null && map.isMoving()
+    }
+];
+const composedMethodGetter = (map) => ({
+    center: map.getCenter(),
+    zoom: map.getZoom(),
+    bearing: map.getBearing(),
+    pitch: map.getPitch()
+});
+const composedMethodConfig = {
+    events: composedMethodEvents,
+    getter: composedMethodGetter
+};
+const moveMethodConfig = {
+    events: [{ name: 'moveend', check: (map) => map.isMoving() }],
+    getter: (map) => ({ center: map.getCenter() })
+};
+const zoomMethodConfig = {
+    events: [{ name: 'zoomend', check: (map) => map.isZooming() }],
+    getter: (map) => ({ zoom: map.getZoom() })
+};
+const rotateMethodConfig = {
+    events: [{ name: 'rotateend', check: (map) => map.isRotating() }],
+    getter: (map) => ({ bearing: map.getBearing() })
+};
+var methodsData = {
+    setCenter: moveMethodConfig,
+    panBy: moveMethodConfig,
+    panTo: moveMethodConfig,
+    setZoom: zoomMethodConfig,
+    zoomTo: zoomMethodConfig,
+    zoomIn: zoomMethodConfig,
+    zoomOut: zoomMethodConfig,
+    setBearing: rotateMethodConfig,
+    rotateTo: rotateMethodConfig,
+    resetNorth: rotateMethodConfig,
+    snapToNorth: rotateMethodConfig,
+    setPitch: {
+        events: [{ name: 'pitchend', check: (map) => true }],
+        getter: (map) => ({
+            pitch: map.getPitch()
+        })
+    },
+    fitBounds: {
+        events: [
+            { name: 'zoomend', check: (map) => map.isZooming() },
+            { name: 'moveend', check: (map) => map.isMoving() },
+            { name: 'rotateend', check: (map) => map.isRotating() }
+        ],
+        getter: (map) => ({
+            zoom: map.getZoom(),
+            bearing: map.getBearing(),
+            pitch: map.getPitch(),
+            center: map.getCenter()
+        })
+    },
+    fitScreenCoordinates: {
+        events: [
+            { name: 'zoomend', check: (map, options) => map.isZooming() },
+            { name: 'moveend', check: (map, options) => map.isMoving() },
+            { name: 'rotateend', check: (map, options) => options.bearing && map.isRotating() }
+        ],
+        getter: (map) => ({
+            zoom: map.getZoom(),
+            center: map.getCenter(),
+            bearing: map.getBearing(),
+            pitch: map.getPitch()
+        })
+    },
+    jumpTo: composedMethodConfig,
+    easeTo: composedMethodConfig,
+    flyTo: composedMethodConfig
+};
+
+function generateEventId(methodName) {
+    return `${methodName}-${('' + Math.random()).split('.')[1]}`;
+}
+function catchEventFabric(map, eventName, eventId, resolve) {
+    const catchEvent = (event) => {
+        if (event.type !== eventName || event.eventId !== eventId) {
+            return;
+        }
+        map.off(eventName, catchEvent);
+        resolve(event);
+    };
+    return catchEvent;
+}
+function promisifyMethod(map, methodName) {
+    const method = map[methodName];
+    const argsCount = method.length;
+    return (...args) => {
+        const handlers = [];
+        const eventData = { eventId: generateEventId(methodName) };
+        // Creating list of events and event listeners
+        const catchers = methodsData[methodName].events.map((event, index) => {
+            return {
+                event,
+                func: new Promise((resolve, reject) => {
+                    handlers[index] = { event, func: catchEventFabric(map, event.name, eventData.eventId, resolve) };
+                    map.on(event.name, handlers[index].func);
+                })
+            };
+        });
+        const argsArray = [];
+        // Creating list of arguments.
+        for (let i = 0; i < argsCount; i++) {
+            if (i === argsCount - 1) {
+                // If args[i] is last argument, we assume that this is eventData argument,
+                // merge it with eventData passed by user and add in the end of list of arguments
+                argsArray.push({ ...eventData, ...(args[i] || {}) });
+            }
+            else {
+                // If args[i] is not last argument, just add it in the list of arguments
+                argsArray.push(args[i] || null);
+            }
+        }
+        let funcs = [];
+        let options = args[0] || {};
+        try {
+            method.apply(map, argsArray);
+            // Filter catchers.
+            // If map state is not changes (e.g. zoomTo(1) don't produce any events if map already on zoom 1),
+            // just return resolved promise
+            // .fitBounds() and .fitScreenCoordinates() needs special processing due to different number of arguments
+            if (methodName === 'fitBounds') {
+                // args[0] is bounding box, options is args[1], but we don't need them to calculate events to listen
+                options = {};
+            }
+            if (methodName === 'fitScreenCoordinates') {
+                options = { bearing: null };
+                options.bearing = null;
+                // bearing can be passed by user as optional argument
+                if (typeof args[2] === 'number') {
+                    options.bearing = args[2];
+                }
+                // pass bearing merged with other options
+                if (args[3] && typeof args[3] === 'object') {
+                    options = {
+                        ...options,
+                        ...args[3]
+                    };
+                }
+            }
+            funcs = catchers.map(({ event, func }) => {
+                if (event.check(map, options)) {
+                    return func;
+                }
+                else {
+                    map.off(event.name, func);
+                    return Promise.resolve();
+                }
+            });
+        }
+        catch (err) {
+            handlers.forEach(({ event, func }) => {
+                map.off(event.name, func);
+            });
+            throw err;
+        }
+        return Promise.all(funcs).then(() => {
+            return methodsData[methodName].getter(map);
+        });
+    };
+}
+
+function promisifyMap (map) {
+    const toPromisify = Object.keys(methodsData);
+    const actions = {};
+    toPromisify.forEach((key) => {
+        if (toPromisify.indexOf(key) !== -1) {
+            actions[key] = promisifyMethod(map, key);
+        }
+    });
+    return actions;
+}
+
+function promisify(map, methodName = null) {
+    if (methodName) {
+        return promisifyMethod(map, methodName);
+    }
+    else {
+        return promisifyMap(map);
+    }
+}
+
+export default promisify;
